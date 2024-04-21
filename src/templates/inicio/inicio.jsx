@@ -1,0 +1,78 @@
+import logo from '/logo tomi.webp'
+import icono from '/icono.webp'
+import './inicio.css'
+// import martillo from '/martillo-inoxcrom.webp'
+// import taladro from '/1108295804_63.webp'
+// import set from '/1548638_18.webp'
+import { Link } from 'react-router-dom'
+import { userApi } from '../../api/userApi';
+import { useEffect, useState } from 'react';
+
+
+function Header() {
+
+    return (
+        <>
+        <header>
+            <div className="box">
+            <Link to="/login"><img src={icono} className='login' alt=""/></Link>
+            </div>
+            <div className="navBar">
+            <div className="caja">
+                <a href=""><img src={logo} alt="logo" className='logo'/></a>
+                <h1 className='name'>FERRAA<span>MAS</span></h1>          
+            </div>          
+            </div>  
+        </header>    
+        </>
+    );
+}
+  
+function Main(){
+
+  const [availableProducts, setAvailableProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts()
+  }, []);
+  
+  const getProducts = async() => {
+    const resp = await userApi.get('http://localhost:4000/products');
+    setAvailableProducts( resp.data );
+  }
+
+  return (
+    <>
+      <main className='contenedor'>
+        <h1 className='title'>Nuestros <br />Productos</h1>
+        
+        <div className="grid">
+          {availableProducts.map((producto, index) => (
+            <div className="producto" key={index}>
+              <a href=""> 
+                <img className='productoImg' src={`data:image/png;base64,${producto.imagen_producto}`} alt="" />
+
+                <div className="info">
+                  <p className="nombreProducto">{producto.nombre_producto}</p>
+                  <p className="precioProducto">Precio: <span>${producto.precio_producto}</span></p>
+                  <button>Agregar al carrito</button>
+                </div>
+              </a>
+            </div> 
+          ))} 
+        </div>
+      </main>
+    </>
+  )
+}
+
+
+export default function Inicio (){
+
+  return(
+      <>
+          <Header />
+          <Main />
+      </>
+  )
+}
