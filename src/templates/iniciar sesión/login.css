@@ -1,0 +1,73 @@
+.form {
+    position: absolute; /* O puedes usar 'relative' dependiendo de la estructura de tu página */
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    padding: 2rem 5rem;
+    border-radius: 100px;
+}
+
+.title {
+    color: white;
+    background-color: black;
+    font-weight: 100;
+}
+
+.log {
+    display: flex;
+    justify-content: center;
+
+}
+
+.input-box {
+    margin-top: 2rem;
+    display: flex;
+}
+
+
+.lblIni {
+    display: flex;
+    color: white;
+    font-size: 20px;
+    font-weight: 100;
+    justify-content: center;
+
+}
+
+.input-box input {
+    margin-top: -1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    font-size: 16px;
+    background-color: white;
+    padding: 5px 5px;
+}
+
+.btn-submit {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.btn-submit button {
+    font-size: 20px;
+    background-color: white;
+    border: none;
+    font-family: "Readex Pro", sans-serif;
+    font-weight: 200;
+    border-radius: 200px;
+    padding: 5px 2rem;
+    
+}
+
+.btn-submit button:hover {
+    background-color: gray;
+    cursor: pointer;
+    transition: background-color 1s ease-in-out;
+}
+

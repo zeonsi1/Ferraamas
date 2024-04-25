@@ -11,15 +11,15 @@ function Header() {
   return (
     <>
     <header>
-        <div className="box">
+      <div className="box">
         <Link to="/login"><img src={icono} className='login' alt=""/></Link>
-        </div>
-        <div className="navBar">
+      </div> 
+      <div className="navBar">
         <div className="caja">
-            <a href=""><img src={logo} alt="logo" className='logo'/></a>
-            <h1 className='name'>FERRAA<span>MAS</span></h1>          
-        </div>          
-        </div>  
+          <a href=""><img src={logo} alt="logo" className='logo'/></a>
+          <Link to='/'><h1 className='name'>FERRAA<span>MAS</span></h1></Link>
+        </div>
+      </div> 
     </header>    
     </>
   );
@@ -41,8 +41,8 @@ function Main(){
 
   return (
     <>
-      <main className='contenedor'>
-        <h1 className='title'>Nuestros <br />Productos</h1>
+      <body className='contenedor'>
+        <h1 className='title-index'>Nuestros Productos</h1>
         
         <div className="grid">
           {availableProducts.map((producto, index) => (
@@ -58,7 +58,7 @@ function Main(){
             </div> 
           ))} 
         </div>
-      </main>
+      </body>
     </>
   )
 }

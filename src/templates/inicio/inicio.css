@@ -2,8 +2,11 @@
     font-family: "Readex Pro", sans-serif;
 }
 
+header {
+    padding: 2rem;
+}
+
 .navBar {
-    margin: 0 30%;
     display: flex;
     justify-content: center;
 }
@@ -14,8 +17,9 @@
   
 .name {
     font-size: 40px;
-    margin: 0 auto;
+    margin: 2rem;
     font-weight: 100;
+    color: black;
 }
   
 span {
@@ -37,29 +41,33 @@ span {
     justify-content: end;
     margin: 1rem 35%;
 }
-  
+
 .contenedor {
-    margin-top: 4rem;
+    padding: 2rem;
+    background-color: black;
+    margin: -8px;
 }
-  
-.title {
+
+.title-index {
     text-align: center;
     font-weight: 200;
     font-size: 2rem;
+    color: white;
 }
   
 .grid {
-    /* margin-top: 1.4rem; */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 5rem;
     width: 80rem;
     margin: 0 auto;
 }
   
 .producto {
     padding: 0px 4rem;
-    border-radius: 200px;
+    border: solid 1px white;
+    border-radius: 50px;
+    background-color: white;
 }
 
 hr {
@@ -68,8 +76,6 @@ hr {
   
 .productoImg {
     width: 100%;
-    border: solid 1px black;
-    border-radius: 100px;
 }
   
 .nombreProducto {
@@ -84,4 +90,9 @@ hr {
     font-weight: 100;
     font-size: 25px;
     padding-bottom: 2.5rem;
+}
+
+.producto:hover{
+    border-radius: 200px;
+    transition: 2.5s ;
 }
