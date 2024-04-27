@@ -1,10 +1,10 @@
 import logo from '/logo tomi.webp'
 import icono from '/icono.webp'
-import './inicio.css'
 import { Link } from 'react-router-dom'
-import { userApi } from '../../api/userApi';
+import { userApi } from '../api/userApi';
 import { useEffect, useState } from 'react';
-import ImageComponent from '../../component/ImageComponent';
+import ImageComponent from './ImageComponent';
+
 
 function Header() {
 
@@ -52,7 +52,9 @@ function Main(){
                 <div className="info">
                   <p className="nombreProducto">{producto.nombre_producto}</p>
                   <p className="precioProducto">Precio: <span>${producto.precio_producto}</span></p>
-                  <button>Agregar al carrito</button>
+                  <div className="btn-carrito">
+                    <button>Agregar al carrito</button>
+                  </div>
                 </div>
               </a>
             </div> 

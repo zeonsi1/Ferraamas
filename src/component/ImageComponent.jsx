@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Buffer } from 'buffer'; // Import Buffer
-import '../templates/inicio/inicio.css'
 
 
 const ImageComponent = ({ producto }) => {
