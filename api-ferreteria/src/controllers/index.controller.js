@@ -10,8 +10,6 @@ const pool = new Pool({
 
 const postUsers = async (req, res) =>{
     const {email, password} = req.body;
-    console.log(email)
-    console.log(password)
 
     const query = {
         text: 'SELECT id_tipo_user FROM users WHERE email = $1 AND password = $2',
@@ -20,12 +18,10 @@ const postUsers = async (req, res) =>{
 
     try {
         const response = await pool.query(query);
-        console.log(response.rows);
-        if (response.rows.length > 0) {
-          // User found, send appropriate response (e.g., token)
-          res.status(200).json(response.rows); // Replace with your logic
+        if (response.rows.length > 0) {          
+          res.status(200).json(response.rows);
         } else {
-          res.status(401).json({ error: 'Invalid email or password' }); // Unauthorized
+          res.status(401).json({ error: 'Invalid email or password' });
         }
 
     } catch (error) {

@@ -4,6 +4,7 @@ a {
 
 :root {
   font-family: "Readex Pro", sans-serif;
+  --negro: #111111;
 }
 
 header {
@@ -23,7 +24,7 @@ header {
   font-size: 40px;
   margin: 2rem;
   font-weight: 100;
-  color: black;
+  color: var(--negro);
 }
 
 span {
@@ -48,7 +49,7 @@ span {
 
 .contenedor {
   padding: 2rem;
-  background-color: black;
+  background-color: var(--negro);
   margin: -8px;
 }
 
@@ -83,14 +84,14 @@ hr {
 }
 
 .nombreProducto {
-  color: black;
+  color: var(--negro);
   font-size: 30px;
   font-weight: 400;
   text-align: center;
 }
 
 .precioProducto {
-  color: black;
+  color: var(--negro);
   font-weight: 100;
   font-size: 25px;        
 }
@@ -110,7 +111,7 @@ hr {
   font-size: 1.2rem;
   cursor: pointer;
   background-color: white;
-  color: black;
+  color: var(--negro);
   border-radius: 10px;
   padding: 1rem 2rem;
   font-weight: 400;
@@ -128,14 +129,14 @@ hr {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: black;
+  background-color: var(--negro);
   padding: 2rem 5rem;
   border-radius: 100px;
 }
 
 .title {
   color: white;
-  background-color: black;
+  background-color: var(--negro);
   font-weight: 100;
   text-align: center;
 }
