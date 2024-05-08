@@ -1,4 +1,7 @@
+const axios = require('axios');
+
 const { Pool } = require('pg');
+
 
 const pool = new Pool({
     host: 'localhost',
@@ -7,6 +10,12 @@ const pool = new Pool({
     database: 'ferreteria',
     port: '5432'
 });
+
+const fechaActual = new Date();
+
+const anno = fechaActual.getFullYear();
+const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+const dia = String(fechaActual.getDate()).padStart(2, '0');
 
 const postUsers = async (req, res) =>{
     const {email, password} = req.body;
@@ -36,7 +45,15 @@ const getProducts = async (req, res) => {
     res.status(200).json(response.rows);
 };
 
+const postDivisa = async(req, res) => {
+    fecha = `${anno}-${mes}-${dia}`;
+    const resp = await axios.get(`https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ferraamas@gmail.com&pass=Awachuleru2123&firstdate=${fecha}&timeseries=F073.TCO.PRE.Z.D&function=GetSeries`)
+    let valor = resp.data.Series.Obs[0].value;
+    console.log(valor)
+}
+
 module.exports = {
     postUsers,
-    getProducts
+    getProducts,
+    postDivisa,
 }
