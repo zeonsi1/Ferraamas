@@ -93,7 +93,8 @@ hr {
 .precioProducto {
   color: var(--negro);
   font-weight: 100;
-  font-size: 25px;        
+  font-size: 25px;
+  text-align: center;    
 }
 
 .producto:hover{
@@ -114,7 +115,7 @@ hr {
   color: var(--negro);
   border-radius: 10px;
   padding: 1rem 2rem;
-  font-weight: 400;
+  font-weight: 200;
   font-family: "Readex Pro", sans-serif;
 }
 
@@ -212,4 +213,29 @@ hr {
 .cart {
   height: 70px;
   width: 70px;
+}
+
+.title-divisa {
+  color: white;
+  font-size: 25px;
+  font-weight: 100;
+}
+
+.divisaSelector {
+  display: block;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.titleD {
+  margin-bottom: 1%;
+}
+
+.selector-divisa {
+  padding: 0.2rem 1rem;
+  font-size: 15px;
+  border: none;
+  text-align: center;
+  appearance: none;
+  border-radius: 10px;
 }

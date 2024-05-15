@@ -22,7 +22,7 @@ INSERT INTO productos (nombre_producto, precio_producto, imagen_producto) VALUES
 ('Taladro', 80000, pg_read_binary_file('ruta')::bytea);
 
 INSERT INTO productos (nombre_producto, precio_producto, imagen_producto) VALUES 
-('Taladro', 80000, pg_read_binary_file('ruta')::bytea);
+('Herramientas', 80000, pg_read_binary_file('ruta')::bytea);
 
 CREATE TABLE tipo_user (
 	id_tipo_user SERIAL PRIMARY KEY,
