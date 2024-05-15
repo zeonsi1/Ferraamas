@@ -45,15 +45,45 @@ const getProducts = async (req, res) => {
     res.status(200).json(response.rows);
 };
 
-const postDivisa = async(req, res) => {
+const postProducts = async(req, res) => {
+    divisa = req.body.divisa;
     fecha = `${anno}-${mes}-${dia}`;
-    const resp = await axios.get(`https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ferraamas@gmail.com&pass=Awachuleru2123&firstdate=${fecha}&timeseries=F073.TCO.PRE.Z.D&function=GetSeries`)
-    let valor = resp.data.Series.Obs[0].value;
-    console.log(valor)
+    let resp = ''; 
+    let valor = 0;
+    let precio = 0;
+
+    const response = await pool.query('SELECT precio_producto FROM productos');
+
+    switch (divisa){
+        case 'CLP':
+            res.status(200).json(response.rows);
+            break;
+        case 'EUR':
+            resp = await axios.get(`https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ferraamas@gmail.com&pass=Duoc123&firstdate=${fecha}&timeseries=F072.CLP.EUR.N.O.D&function=GetSeries`);
+            valor = resp.data.Series.Obs[0].value;
+            for (let i in response.rows){                
+                precio = response.rows[i].precio_producto;
+                precio = Math.round(precio / valor);
+                response.rows[i].precio_producto = precio;
+            }            
+            res.status(200).json(response.rows);
+            break;
+        case 'USD':
+            resp = await axios.get(`https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ferraamas@gmail.com&pass=Duoc123&firstdate=${fecha}&timeseries=F073.TCO.PRE.Z.D&function=GetSeries`);
+            valor = resp.data.Series.Obs[0].value;
+            console.log(valor);
+            for (let i in response.rows){                
+                precio = response.rows[i].precio_producto;
+                precio = Math.round(precio / valor);
+                response.rows[i].precio_producto = precio
+            }
+            res.status(200).json(response.rows);    
+            break;
+    }
 }
 
 module.exports = {
     postUsers,
     getProducts,
-    postDivisa,
+    postProducts,
 }
