@@ -5,18 +5,37 @@ import { userApi } from '../api/userApi';
 import { useEffect, useState } from 'react';
 import ImageComponent from './ImageComponent';
 import cart from '/shopping-cart_2838895.webp';
+import Modal from '../Modals/carritoModal';
+import PropTypes from 'prop-types';
 
-function Header() {
+function Header({cartProducts}) {
+  const [showModal, setShowModal] = useState(false);
+
+  const quantityV = () => {
+    let cantidad = 0;
+    cartProducts.forEach((product) => {
+      cantidad += product.quantity;
+    });
+    return cantidad;
+  }
+
+  useEffect(() => {
+  }, [cartProducts]);
   
   const handleClick = (e) => {
     e.preventDefault()
+    setShowModal(true);
   }
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
     <header>
       <div className="box">
-        <a onClick={handleClick} href=""><img className='cart' src={cart} alt="carrito" /></a> 
+        <a style={{color: 'black', cursor: 'pointer'}} onClick={handleClick}><img className='cart' src={cart} alt="carrito" />{quantityV()}</a> 
         <Link to="/login"><img src={icono} className='login' alt=""/></Link>
       </div> 
       <div className="navBar">
@@ -25,23 +44,21 @@ function Header() {
           <Link to='/'><h1 className='name'>FERRAA<span>MAS</span></h1></Link>
         </div>
       </div> 
-    </header>    
+    </header>
+
+    {showModal && <Modal cartProducts={cartProducts} onClose={handleClose} />}  
     </>
   );
 }
   
-function Main(){
+function Main({setCart}){
   const [availableProducts, setAvailableProducts] = useState([]);
   const [divisaType, setDivisa] = useState();
-  const [cartProducts, setCart] = useState([]);
 
   useEffect(() => {
     getProducts()
   }, []);
 
-  useEffect(() => {
-    console.log("Cart updated:", cartProducts);
-  }, [cartProducts]);
 
   const getProducts = async() => {
     const resp = await userApi.get('http://localhost:4000/products');
@@ -63,10 +80,20 @@ function Main(){
   }
 
   const formatearPrecio = (precio) => {
-    let simbolo = '$';
-    if (divisaType === 'EUR') {
-      simbolo = '€';
+    let simbolo = 'clp$';
+    
+    switch (divisaType) {
+      case 'EUR':
+        simbolo = '€';
+        break;
+      case 'CLP':
+        simbolo = 'clp$';
+        break;
+      case 'USD':
+        simbolo = 'usd$';
+        break;
     }
+
     return `${simbolo}${precio.toLocaleString("es-Cl")}`;
   }
 
@@ -125,12 +152,25 @@ function Main(){
   )
 }
 
+Main.propTypes = {
+  setCart: PropTypes.func.isRequired
+};
+
+Header.propTypes = {
+  cartProducts: PropTypes.array.isRequired,
+  updateCart: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired
+};
 
 export default function Inicio (){
+  const [cartProducts, setCart] = useState([]);
+  const updateCart = (newCart) => {
+    setCart(newCart);
+  }
   return(
       <>
-        <Header/>
-        <Main />
+        <Header cartProducts={cartProducts} updateCart={updateCart}/>
+        <Main setCart={updateCart}/>
       </>
   )
 }

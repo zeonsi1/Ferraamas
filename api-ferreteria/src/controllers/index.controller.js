@@ -41,8 +41,13 @@ const postUsers = async (req, res) =>{
 };
 
 const getProducts = async (req, res) => {
-    const response = await pool.query('SELECT * FROM productos');
-    res.status(200).json(response.rows);
+    try {
+        const response = await pool.query('SELECT * FROM productos');
+        res.status(200).json(response.rows);
+    } catch (error) {
+        console.error('Error al obtener la lista de productos: ', error);
+        res.status(500).json({ error: 'Error al obtener la lista de productos' });
+    }
 };
 
 const postProducts = async(req, res) => {
@@ -71,7 +76,6 @@ const postProducts = async(req, res) => {
         case 'USD':
             resp = await axios.get(`https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ferraamas@gmail.com&pass=Duoc123&firstdate=${fecha}&timeseries=F073.TCO.PRE.Z.D&function=GetSeries`);
             valor = resp.data.Series.Obs[0].value;
-            console.log(valor);
             for (let i in response.rows){                
                 precio = response.rows[i].precio_producto;
                 precio = Math.round(precio / valor);
