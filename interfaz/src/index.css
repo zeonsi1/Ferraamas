@@ -189,7 +189,6 @@ hr {
   font-weight: 200;
   border-radius: 200px;
   padding: 5px 2rem;
-  
 }
 
 .btn-submit button:hover:valid {
@@ -208,6 +207,11 @@ hr {
 .control-error p{
   color: red;
   font-weight: bold;
+}
+
+.register p {
+  color: white;
+  font-weight: 100;
 }
 
 .cart {
@@ -243,9 +247,6 @@ hr {
 /* Modal */
 
 
-Edit
-Full Screen
-Copy code
 .modal {
   position: fixed;
   top: 0;
@@ -264,6 +265,21 @@ Copy code
   padding: 20px;
   width: 500px;
   max-width: 90%;
+}
+
+.title-modal {
+  display: block;
+  text-align: center;
+  justify-content: center;
+}
+
+.title-modal h2 {
+  display: flex;
+  margin: 0 auto;
+  font-weight: 100;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
 }
 
 .cart-list {
@@ -292,12 +308,74 @@ Copy code
   cursor: pointer;
 }
 
+.total-producto {
+  font-size: 30px;
+  font-weight: 100;
+}
+
+.btn-cart {
+  display: flex;
+  justify-content: center;
+}
+
 .close-button {
-  background-color: #007bff;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+  background-color: var(--negro);
+  color: white;
+  font-size: 20px;
+  font-family: "Readex Pro", sans-serif;
+  font-weight: 100;
   border: none;
   border-radius: 4px;
-  padding: 5px 10px;
+  padding: 5px 50px;
   cursor: pointer;
   margin-top: 10px;
+}
+
+.close-button:hover {
+  border-radius: 50px;
+  background-color: gray;
+  transition: 5s;
+}
+
+.close-button:disabled {
+  background-color: gray;
+  cursor: no-drop;
+}
+
+/* tabla usuarios */
+
+.table-user {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.table-user .table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-user .table th,
+.table-user .table td {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.table-user .table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table-user .table td {
+  vertical-align: middle;
+}
+
+.table-user .table caption {
+  font-size: 30px;
+  font-weight: 100;
+  margin-bottom: 10px;
 }

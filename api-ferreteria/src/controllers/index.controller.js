@@ -1,7 +1,8 @@
 const axios = require('axios');
-
 const { Pool } = require('pg');
+const { WebpayPlus } = require('transbank-sdk');
 
+WebpayPlus.configureForTesting();
 
 const pool = new Pool({
     host: 'localhost',
@@ -17,11 +18,11 @@ const anno = fechaActual.getFullYear();
 const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
 const dia = String(fechaActual.getDate()).padStart(2, '0');
 
-const postUsers = async (req, res) =>{
+const postUsers = async(req, res) =>{
     const {email, password} = req.body;
 
     const query = {
-        text: 'SELECT id_tipo_user FROM users WHERE email = $1 AND password = $2',
+        text: 'SELECT id_tipo_user, pnombre_user FROM users WHERE email = $1 AND password = $2',
         values: [email, password]
     }
 
@@ -40,7 +41,7 @@ const postUsers = async (req, res) =>{
     
 };
 
-const getProducts = async (req, res) => {
+const getProducts = async(req, res) => {
     try {
         const response = await pool.query('SELECT * FROM productos');
         res.status(200).json(response.rows);
@@ -86,8 +87,56 @@ const postProducts = async(req, res) => {
     }
 }
 
+const getUsers = async(req, res) => {
+    try {
+        const response = await pool.query('SELECT u.id, u.pnombre_user, u.email, u.password, tu.nombre_tipo_user FROM users u JOIN tipo_user tu ON u.id_tipo_user = tu.id_tipo_user ORDER BY u.id');
+        res.status(200).json(response.rows);
+    } catch (error) {
+        console.error('Error al obtener la lista de usuarios: ', error);
+        res.status(500).json({ error: 'Error al obtener la lista de usuarios' });
+    }
+}
+
+const postWebpay = async(req, res) => {
+    const { total: amount } = req.body;
+    sessionId = '1';
+    returnUrl = 'http://localhost:4000/webpay-return';
+    let buyOrder = 'Herramientas';
+    
+    try{
+        const createResponse = await (new WebpayPlus.Transaction()).create(
+            buyOrder, 
+            sessionId, 
+            amount, 
+            returnUrl
+          );
+        res.status(200).json(createResponse);
+    }catch (error){
+        console.error('no funca', error);
+    }
+}
+
+const getWebpayReturn = async(req, res) => {
+    const token_ws = req.query.token_ws;
+    const tx = new WebpayPlus.Transaction();
+
+    if (!token_ws) {
+        return res.status(400).json({ error: 'token_ws es requerido' });
+    }
+    try {
+        const commitResponse = await tx.commit(token_ws);
+        res.json(commitResponse);
+    } catch (error) {
+        console.error('Error handling Webpay return: ', error);
+        res.status(500).json({ error: 'Error handling Webpay return' });
+    }
+}
+
 module.exports = {
     postUsers,
     getProducts,
     postProducts,
+    getUsers,
+    postWebpay,
+    getWebpayReturn
 }

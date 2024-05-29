@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const {getProducts, postUsers, postProducts } = require('../controllers/index.controller');
+const {getProducts, postUsers, postProducts, getUsers, postWebpay, getWebpayReturn } = require('../controllers/index.controller');
 
 
 /**
@@ -110,6 +110,105 @@ router.get('/products', getProducts);
  *                     type: number
  *                     description: Precio del producto en la divisa especificada.
  */
-router.post('/products2', postProducts)
+router.post('/products2', postProducts);
+
+/**
+ * @swagger
+ * /users-mostrar:
+ *   get:
+ *     summary: Obtener una lista de usuarios
+ *     responses:
+ *       200:
+ *         description: Una lista de usuarios
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: El ID del usuario
+ *                     example: 1
+ *                   pnombre_user:
+ *                     type: string
+ *                     description: El primer nombre del usuario
+ *                     example: Juan
+ *                   email:
+ *                     type: string
+ *                     description: El email del usuario
+ *                     example: juan@example.com
+ */
+router.get('/users-mostrar', getUsers);
+
+/**
+ * @swagger
+ * /webpay:
+ *   post:
+ *     summary: Iniciar una transacción de Webpay
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               products:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       example: 1
+ *                     quantity:
+ *                       type: integer
+ *                       example: 2
+ *               total:
+ *                 type: number
+ *                 example: 1000
+ *     responses:
+ *       200:
+ *         description: Transacción iniciada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 url:
+ *                   type: string
+ *                   example: https://webpay.url
+ *                 token:
+ *                   type: string
+ *                   example: abcd1234
+ */
+router.post('/webpay', postWebpay)
+
+/**
+ * @swagger
+ * /webpay-return:
+ *   get:
+ *     summary: Manejar el retorno de Webpay
+ *     parameters:
+ *       - in: query
+ *         name: token_ws
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: El token de Webpay
+ *     responses:
+ *       200:
+ *         description: Retorno de Webpay manejado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ */
+router.get('/webpay-return', getWebpayReturn)
 
 module.exports = router;

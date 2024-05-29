@@ -8,7 +8,7 @@ import cart from '/shopping-cart_2838895.webp';
 import Modal from '../Modals/carritoModal';
 import PropTypes from 'prop-types';
 
-function Header({cartProducts}) {
+function Header({cartProducts, updateCart, divisaType}) {
   const [showModal, setShowModal] = useState(false);
 
   const quantityV = () => {
@@ -46,14 +46,13 @@ function Header({cartProducts}) {
       </div> 
     </header>
 
-    {showModal && <Modal cartProducts={cartProducts} onClose={handleClose} />}  
+    {showModal && <Modal cartProducts={cartProducts} onClose={handleClose} updateCart={updateCart} divisaType={divisaType}/>}  
     </>
   );
 }
   
-function Main({setCart}){
+function Main({cartProducts, setCart, setDivisa, divisaType}){
   const [availableProducts, setAvailableProducts] = useState([]);
-  const [divisaType, setDivisa] = useState();
 
   useEffect(() => {
     getProducts()
@@ -77,8 +76,13 @@ function Main({setCart}){
     })
     setAvailableProducts(updatedProducts);
     setDivisa(selectedDivisa);
+    setCart(cartProducts.map((item) => {
+      const updatedProduct = updatedProducts.find((product) => product.id_producto === item.producto.id_producto);
+      return {...item, producto: {...item.producto, precio_producto: updatedProduct.precio_producto }};
+    }));
   }
 
+ 
   const formatearPrecio = (precio) => {
     let simbolo = 'clp$';
     
@@ -104,13 +108,13 @@ function Main({setCart}){
       if (existingItem) {
         return prevCart.map((item) => {
           if (item.producto === producto) {
-            return { ...item, quantity: item.quantity + 1 };
+            return { ...item, quantity: item.quantity + 1};
           } else {
             return item;
           }
         });
       } else {
-        return [...prevCart, { producto, quantity: 1 }];
+        return [...prevCart, { producto, quantity: 1}];
       }
     });
   }
@@ -153,24 +157,28 @@ function Main({setCart}){
 }
 
 Main.propTypes = {
+  cartProducts: PropTypes.array.isRequired,
+  divisaType: PropTypes.string.isRequired,
+  setDivisa: PropTypes.func.isRequired,
   setCart: PropTypes.func.isRequired
 };
 
 Header.propTypes = {
   cartProducts: PropTypes.array.isRequired,
+  divisaType: PropTypes.string.isRequired,
   updateCart: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired
 };
 
 export default function Inicio (){
   const [cartProducts, setCart] = useState([]);
+  const [divisaType, setDivisa] = useState('CLP');
   const updateCart = (newCart) => {
     setCart(newCart);
   }
   return(
       <>
-        <Header cartProducts={cartProducts} updateCart={updateCart}/>
-        <Main setCart={updateCart}/>
+        <Header cartProducts={cartProducts} updateCart={updateCart} divisaType={divisaType}/>
+        <Main cartProducts={cartProducts} setCart={setCart} setDivisa={setDivisa} divisaType={divisaType}/>
       </>
   )
 }

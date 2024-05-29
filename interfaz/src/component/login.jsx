@@ -40,6 +40,7 @@ function Login() {
     const handleSumbit = async(e) => {
         let user = 0;
         e.preventDefault();
+        let pnombre = '';
         let message = '';
         try{
             
@@ -49,16 +50,16 @@ function Login() {
                 }
             });
             user = resp.data[0].id_tipo_user;
-            console.log(user);
+            pnombre = resp.data[0].pnombre_user;
             switch (user) {
                 case 1:
-                    navigate('/admin');
+                    navigate('/admin', {state: {pnombre}});
                     break;
                 case 2:
-                    navigate('/bodeguero');
+                    navigate('/bodeguero', {state: {pnombre}});
                     break;
                 default:
-                    navigate('/');
+                    navigate('/', {state: {pnombre}});
             }
 
         }catch (error) {
@@ -147,7 +148,10 @@ function Login() {
                     <div className="control-error">
                         {showMessage && <p>{errorMessage}</p>}
                     </div>
-                    <br />   
+                    <div className="register">
+                        <p>No Tienes Cuenta? <Link to={'/register'} style={{color: 'white', textDecorationLine: 'underline'}}>Haz Click Aquí</Link></p>
+                    </div>
+                    <br />
                     <div className="btn-submit">
                         <button disabled={!formValid} type='submit'>Iniciar Sesión</button>
                     </div>

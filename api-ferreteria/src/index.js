@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require('cors');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 // Swagger
@@ -6,15 +8,10 @@ const { swaggerDocs: V1SwaggerDocs } = require('./swagger')
 
 const PORT = process.env.PORT || 4000;
 
+app.use(cors());
+
+
 // middlewares
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // allow all domains
-    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-    next();
-});
-  
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
