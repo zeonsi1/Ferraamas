@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const {getProducts, postUsers, postProducts, getUsers, postWebpay, getWebpayReturn } = require('../controllers/index.controller');
+const {getProducts, postUsers, postProducts, getUsers, postWebpay, getWebpayReturn, postCreateUser } = require('../controllers/index.controller');
 
 
 /**
@@ -209,6 +209,8 @@ router.post('/webpay', postWebpay)
  *                   type: string
  *                   example: success
  */
-router.get('/webpay-return', getWebpayReturn)
+router.get('/webpay-return', getWebpayReturn);
+
+router.post('/create-user', postCreateUser);
 
 module.exports = router;
