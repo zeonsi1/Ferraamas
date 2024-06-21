@@ -21,7 +21,10 @@ export default function Register() {
 
 
     const [showMessage, setShowMessage] = useState(false);
+    const [show, setShow] = useState(false);
     const [formValid, setFormValid] = useState(false);
+    const [errorMessage, setErrorMessage] = useState([]);
+    const [message, setMessage] = useState([]);
 
     const emailIsInvalid = didEdit.email && !values.email.includes('@');
     const pnombreIsInvalid = didEdit.pnombre && values.pnombre.trim().length < 1;
@@ -42,6 +45,7 @@ export default function Register() {
         }));
 
         setShowMessage(false);
+        setShow(false);
         setFormValid(validateForm());
     }
 
@@ -66,18 +70,26 @@ export default function Register() {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-
+        let message = '';
         try{
             const resp = await userApi.post('http://localhost:4000/create-user', values)
-            console.log(resp)
+            message = resp.data.message;
+            setMessage(message);
+            setShow(true);
         }catch(error) {
-            console.error(`No funca ${error}`)
+            if (error.request.status == 400){
+                message = 'El email esta en uso';
+            }else if (error.request.status == 500){
+                message = 'Ocurrió un error al crear el usuario. Inténtalo de nuevo más tarde.';
+            }
+            setErrorMessage(message);
+            setShowMessage(true);
         }
     }
 
     return(
         <>
-            <div style={{marginTop: 20}} className="form">
+            <div style={{marginTop: 40}} className="form">
                 <form onSubmit={handleSubmit}>
                     <div className="log">
                         <Link to='/'><img src={logo} alt="logo" className="logo"/></Link>
@@ -152,7 +164,10 @@ export default function Register() {
                         {confirmPasswordIsInvalid && <p>Las contraseñas no son iguales</p>}
                     </div>
                     <div className="control-error">
-                        {showMessage}
+                        {showMessage && <p>{errorMessage}</p>}
+                    </div>
+                    <div className="control-error">
+                        {show && <p style={{color: "green"}}>{message}</p>}
                     </div>
                     <div className="btn-submit">
                         <button disabled={!formValid} type="submit">Registrate</button>

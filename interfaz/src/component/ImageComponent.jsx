@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Buffer } from 'buffer';
+import PropTypes from 'prop-types';
 
 
-const ImageComponent = ({ producto }) => {
+export default function ImageComponent ({ producto }) {
   const [imageData, setImageData] = useState('');
 
   useEffect(() => {
@@ -22,6 +23,9 @@ const ImageComponent = ({ producto }) => {
       )}
     </div>
   );
+}
+
+ImageComponent.propTypes = {
+  producto: PropTypes.array.isRequired,
 };
 
-export default ImageComponent;

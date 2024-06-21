@@ -102,6 +102,7 @@ const postWebpay = async(req, res) => {
     sessionId = '1';
     returnUrl = 'http://localhost:4000/webpay-return';
     let buyOrder = 'Herramientas';
+    divisa= req.body.divisaType;
     
     try{
         const createResponse = await (new WebpayPlus.Transaction()).create(
@@ -143,9 +144,10 @@ const postCreateUser = async(req, res) => {
         }
 
         await pool.query('INSERT INTO users (pnombre_user, email, password, id_tipo_user) VALUES ($1, $2, $3, 3)', [pnombre, email, password])
-        res.status(201).json({ message: 'User created successfully' })
+        res.status(201).json({ message: 'Usuario creado con éxito' })
     }catch(error){
-
+        console.error('Error al crear el usuario:', error);
+        res.status(500).json({ error: 'Ocurrió un error al crear el usuario. Inténtalo de nuevo más tarde.' });
     }
 }
 
