@@ -15,7 +15,7 @@ export default function Admin() {
     }, []);
 
     const getUsers = async() => {
-        const resp = await userApi.get('http://localhost:4000/users-mostrar');
+        const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/users-mostrar');
         setAvailableUsers(resp.data);
     }
 
@@ -24,7 +24,7 @@ export default function Admin() {
     }, []);
 
     const getProducts = async () => {
-        const resp = await userApi.get('http://localhost:4000/products');
+        const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/products');
         setProducts( resp.data );
     }
 
@@ -58,7 +58,7 @@ export default function Admin() {
     const updateStock = async (index) => {
         const producto = products[index];
         try {
-            const resp = await userApi.put('http://localhost:4000/update-stock', producto);
+            const resp = await userApi.put('https://api-ferramas-2zzy.onrender.com/update-stock', producto);
             setMessage(prevMessages => {
                 const newMessages = [...prevMessages];
                 newMessages[index] = { message: resp.data.message, showMessage: true };

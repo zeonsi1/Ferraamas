@@ -72,7 +72,7 @@ export default function Register() {
         e.preventDefault()
         let message = '';
         try{
-            const resp = await userApi.post('http://localhost:4000/create-user', values)
+            const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/create-user', values)
             message = resp.data.message;
             setMessage(message);
             setShow(true);

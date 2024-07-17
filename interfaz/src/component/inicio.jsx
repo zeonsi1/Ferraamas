@@ -55,8 +55,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
 
   useEffect(() => {
     const getProducts = async() => {
-      const resp = await userApi.get('http://localhost:4000/products');
-      console.log(resp.data);
+      const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/products');
       setAvailableProducts( resp.data );
     }
   
@@ -66,7 +65,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
   const divisa = async(e) => {
     let selectedDivisa = e.target.value;
     let data = {'divisa': selectedDivisa}
-    const resp = await userApi.post('http://localhost:4000/products2', data);    
+    const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/products2', data);    
     const updatedProducts = resp.data.map((product, index) => {
       return {
         ...availableProducts[index], 

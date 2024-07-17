@@ -60,7 +60,7 @@ function Modal({ cartProducts, onClose, updateCart, divisaType, setAvailableProd
     };
 
     try {
-      const resp = await userApi.post('http://localhost:4000/webpay', data);
+      const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/webpay', data);
       if (Object.keys(resp.data).length > 0) {
         const token = resp.data.token;
         const url = resp.data.url;

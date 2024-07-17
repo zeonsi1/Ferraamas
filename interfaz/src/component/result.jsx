@@ -12,7 +12,7 @@ export default function Result() {
         const token_ws = searchParams.get('token_ws');
 
         if (token_ws) {
-            axios.get(`http://localhost:4000/webpay-return?token_ws=${token_ws}`)
+            axios.get(`https://api-ferramas-2zzy.onrender.com/webpay-return?token_ws=${token_ws}`)
                 .then(response => {
                     // Verificar si la respuesta es HTML
                     if (response.headers['content-type'].includes('text/html')) {
