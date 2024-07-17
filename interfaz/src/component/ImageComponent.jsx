@@ -26,6 +26,6 @@ export default function ImageComponent ({ producto }) {
 }
 
 ImageComponent.propTypes = {
-  producto: PropTypes.array.isRequired,
+  producto: PropTypes.object.isRequired,
 };
 

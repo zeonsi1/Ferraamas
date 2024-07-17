@@ -1,23 +1,14 @@
 import { useLocation } from "react-router-dom";
 import HeaderCommon from "./header";
-import { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
-export default function Admin() {
-    const [availableUsers, setAvailableUsers] = useState([]);
+import { useEffect, useState } from "react";
+
+export default function Contador() {
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
 
     const location = useLocation();
     const pnombre = location.state.pnombre;
-    
-    useEffect(() => {
-        getUsers();
-    }, []);
-
-    const getUsers = async() => {
-        const resp = await userApi.get('http://localhost:4000/users-mostrar');
-        setAvailableUsers(resp.data);
-    }
 
     useEffect(() => {
         getProducts();
@@ -44,15 +35,6 @@ export default function Admin() {
             newProducts[index].stock -= 1;
             setProducts(newProducts);
         }
-    }
-
-    const handlePriceChange = (index, newPrice) => {
-        if (newPrice < 0) {
-            return;
-        }
-        const updatedProducts = [...products];
-        updatedProducts[index].precio_producto = newPrice;
-        setProducts(updatedProducts);
     }
 
     const updateStock = async (index) => {
@@ -93,55 +75,18 @@ export default function Admin() {
                 });
             }, 3000);
         }
-    }    
+    }
 
     return(
         <>
             <HeaderCommon name={pnombre}/>
-            <section className="table-user">
-                <table className="table">
-                    <caption >Usuarios</caption>
-                    <thead>
-                        <tr>
-                        <th>ID</th>
-                        <th>Nombre Usuario</th>
-                        <th>Email Usuario</th>
-                        <th>Password Usuario</th>
-                        <th>Tipo de Usuario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {availableUsers.map((user, index) => (
-                        <tr key={index}>
-                            <td>{user.id}</td>
-                            <td>{user.pnombre_user}</td>
-                            <td>{user.email}</td>
-                            <td>{user.password}</td>
-                            <td>{user.nombre_tipo_user}</td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </section>
-            <hr />
-            <div className="main">
-                <h1 className="title-admin">Productos</h1>
-            </div>
-            <div style={{marginTop: 10, paddingBottom: 500}} className="grid">        
+            <div style={{marginTop: 80}} className="grid">
                 {products.map((producto, index)=>(
                     <div key={index}>
                         <div className="producto">
                             <div className="info">
                                 <p className="nombreProducto">{producto.nombre_producto}</p>
                                 <p className="precioProducto">{formatearPrecio(producto.precio_producto)}</p>
-                                <div className="input-price">
-                                    <input
-                                        type="text"
-                                        value={producto.precio_producto}
-                                        onChange={(e) => handlePriceChange(index, e.target.value)}
-                                        className="precioProductoInput"
-                                    />
-                                </div>
                                 <div className="stock-container precioProducto">
                                     <span>Stock: </span>{producto.stock}
                                     <button onClick={() => incrementarStock(index)} className="boton-stock incrementar">+</button>
@@ -152,12 +97,12 @@ export default function Admin() {
                                 </div>
                                 <div style={{marginTop: 20}} className="btn-stock">
                                     <button onClick={() => updateStock(index)} className="btnStock">Aceptar</button> 
-                                </div>                                                                    
+                                </div>                                         
                             </div>
                         </div>
                     </div>
                 ))}
-            </div>      
+            </div>
         </>
     );
 }

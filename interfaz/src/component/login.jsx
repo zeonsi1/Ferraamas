@@ -58,8 +58,12 @@ function Login() {
                 case 2:
                     navigate('/bodeguero', {state: {pnombre}});
                     break;
-                default:
+                case 3:
                     navigate('/', {state: {pnombre}});
+                    break;
+                case 4:
+                    navigate('/contador', {state: {pnombre}});
+                    break;
             }
 
         }catch (error) {

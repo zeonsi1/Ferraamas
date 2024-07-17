@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import { userApi } from '../api/userApi';
-import { useNavigate } from 'react-router-dom';
-function Modal({ cartProducts, onClose, updateCart, divisaType }) {
-  const navigate = useNavigate();
+function Modal({ cartProducts, onClose, updateCart, divisaType, setAvailableProducts }) {
   const onRemove = (id) => {
     updateCart((prevCartProducts) => 
       prevCartProducts.map((product) => {
@@ -11,6 +9,14 @@ function Modal({ cartProducts, onClose, updateCart, divisaType }) {
         }
         return product;
       }))
+      setAvailableProducts((prevAvailableProducts) => 
+        prevAvailableProducts.map((product) => {
+          if (product.id_producto == id) {
+            return { ...product, stock: product.stock + 1 }
+          }
+          return product;
+        })
+      );
   }
   const formatearPrecio = (precio) => {
     let simbolo = 'clp$';
@@ -32,21 +38,21 @@ function Modal({ cartProducts, onClose, updateCart, divisaType }) {
 
   const totalProduct = () => {
     let total = 0;
-    cartProducts.forEach((product) => {
-      total += product.producto.precio_producto * product.quantity;
+    cartProducts.forEach((product) => {      
+      total += product.producto.precio_producto * product.quantity; 
     });
-    return formatearPrecio(total);
+    return total;
   }
 
   const handlePay = async() => {
-    const total = totalProduct().replace(/[^\d]/g, '');
+    const total = totalProduct();
     const products = cartProducts.map((product) => ({
       id: product.producto.id_producto,
       nombre: product.producto.nombre_producto,
       quantity: product.quantity,
       price: product.producto.precio_producto,
     }));
-  
+
     const data = {
       total,
       products,
@@ -56,18 +62,34 @@ function Modal({ cartProducts, onClose, updateCart, divisaType }) {
     try {
       const resp = await userApi.post('http://localhost:4000/webpay', data);
       if (Object.keys(resp.data).length > 0) {
-        let token = '';
-        let url = '';
-        token = resp.data.token;
-        url = resp.data.url;
-        navigate('/pagar', {state:{token, url}});
+        const token = resp.data.token;
+        const url = resp.data.url;
+  
+        // Crear formulario en memoria
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+        form.style.display = 'none';
+  
+        // Crear input para el token
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = 'token_ws';
+        tokenInput.value = token;
+  
+        // Agregar input al formulario y formulario al cuerpo del documento
+        form.appendChild(tokenInput);
+        document.body.appendChild(form);
+  
+        // Enviar formulario
+        form.submit();
       } else {
         console.error('Los datos no se recibieron correctamente.');
       }
-      console.log(resp.data);
     } catch (error) {
-        console.error('Error al procesar la solicitud:', error);
+      console.error('Error al procesar la solicitud:', error);
     }
+  
   }
 
   return (
@@ -91,12 +113,12 @@ function Modal({ cartProducts, onClose, updateCart, divisaType }) {
             </li>            
           ))}
         </ul>
-        <p className="total-producto">Total: {totalProduct()}</p>
+        <p className="total-producto">Total: {formatearPrecio(totalProduct())}</p>
         <div className="btn-cart">
           <button onClick={onClose} className="close-button">
             Cerrar
           </button>
-          <button onClick={handlePay} disabled={totalProduct().replace(/[^\d]/g, '') === '0'} className="close-button">
+          <button onClick={handlePay} disabled={totalProduct() === '0'} className="close-button">
             Pagar
           </button>
         </div>
@@ -109,7 +131,9 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   cartProducts: PropTypes.array.isRequired,
   updateCart: PropTypes.func.isRequired,
-  divisaType: PropTypes.string.isRequired
+  divisaType: PropTypes.string.isRequired,
+  availableProducts: PropTypes.array.isRequired,
+  setAvailableProducts: PropTypes.func.isRequired,
 };
 
 export default Modal;

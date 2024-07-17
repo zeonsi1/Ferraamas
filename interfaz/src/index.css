@@ -379,3 +379,91 @@ hr {
   font-weight: 100;
   margin-bottom: 10px;
 }
+
+.boton-stock {
+  padding: 5px 10px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton-stock.incrementar {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+}
+
+.boton-stock.incrementar:hover {
+  background-color: #45a049;
+}
+
+.boton-stock.decrementar {
+  background-color: #f44336; /* Rojo */
+  color: white;
+}
+
+.boton-stock.decrementar:hover {
+  background-color: #da190b;
+}
+
+.stock-container {
+  display: flex;
+  align-items: center; /* Alinea verticalmente */
+  gap: 10px; /* Espacio entre los elementos */
+}
+
+.btn-stock {
+  display: flex;
+  justify-content: center;
+}
+
+.btnStock {
+  padding: 0.5rem 2rem;
+  border-radius: 2rem;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-admin {
+  font-weight: 100;
+  justify-content: center;
+}
+
+.input-price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.precioProductoInput {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.result-info {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 5%;
+  height: 500px;
+  width: 450px;
+}
+
+.result-info h1 {
+  font-weight: 500;
+}
+
+.result-info p {
+  text-align: start;
+  font-weight: 100;
+  font-size: 30px;
+}

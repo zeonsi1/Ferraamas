@@ -8,7 +8,7 @@ import cart from '/shopping-cart_2838895.webp';
 import Modal from '../Modals/carritoModal';
 import PropTypes from 'prop-types';
 
-function Header({cartProducts, updateCart, divisaType}) {
+function Header({cartProducts, updateCart, divisaType, setAvailableProducts}) {
   const [showModal, setShowModal] = useState(false);
 
   const quantityV = () => {
@@ -46,23 +46,22 @@ function Header({cartProducts, updateCart, divisaType}) {
       </div> 
     </header>
 
-    {showModal && <Modal cartProducts={cartProducts} onClose={handleClose} updateCart={updateCart} divisaType={divisaType}/>}  
+    {showModal && <Modal cartProducts={cartProducts} onClose={handleClose} updateCart={updateCart} divisaType={divisaType} setAvailableProducts={setAvailableProducts}/>}  
     </>
   );
 }
   
-function Main({cartProducts, setCart, setDivisa, divisaType}){
-  const [availableProducts, setAvailableProducts] = useState([]);
+function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, setAvailableProducts}) {
 
   useEffect(() => {
-    getProducts()
-  }, []);
-
-
-  const getProducts = async() => {
-    const resp = await userApi.get('http://localhost:4000/products');
-    setAvailableProducts( resp.data );
-  }
+    const getProducts = async() => {
+      const resp = await userApi.get('http://localhost:4000/products');
+      console.log(resp.data);
+      setAvailableProducts( resp.data );
+    }
+  
+    getProducts();
+  }, [setAvailableProducts]);
   
   const divisa = async(e) => {
     let selectedDivisa = e.target.value;
@@ -102,22 +101,33 @@ function Main({cartProducts, setCart, setDivisa, divisaType}){
   }
 
   const cartShop = (producto, e) => {
-    e.preventDefault()
+    e.preventDefault();
+    // Disminuir el stock del producto antes de agregarlo al carrito
+    const updatedProducts = availableProducts.map((p) => {
+      if (p.id_producto === producto.id_producto && p.stock > 0) {
+        return { ...p, stock: p.stock - 1 };
+      }
+      return p;
+    });
+    setAvailableProducts(updatedProducts); // Actualizar el estado con los productos actualizados
+  
     setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.producto === producto);
+      const existingItem = prevCart.find((item) => item.producto.id_producto === producto.id_producto);
       if (existingItem) {
         return prevCart.map((item) => {
-          if (item.producto === producto) {
-            return { ...item, quantity: item.quantity + 1};
+          if (item.producto.id_producto === producto.id_producto) {
+            return { ...item, quantity: item.quantity + 1 };
           } else {
             return item;
           }
         });
       } else {
-        return [...prevCart, { producto, quantity: 1}];
+        return [...prevCart, { producto, quantity: 1 }];
       }
     });
-  }
+  };
+
+  const productsWithStock = availableProducts.filter((producto) => producto.stock > 0);
 
   return (
     <>
@@ -134,13 +144,14 @@ function Main({cartProducts, setCart, setDivisa, divisaType}){
           </select>
         </div>
         <div className="grid">
-          {availableProducts.map((producto, index) => (
+          {productsWithStock.map((producto, index) => (
             <div key={index}>
               <div className="producto">
                 <a onClick={(event) => cartShop(producto, event)} href="" >
                   <ImageComponent producto={producto}/>
                   <div className="info">
                     <p className="nombreProducto" value={producto.nombre_producto}>{producto.nombre_producto}</p>
+                    <p className="precioProducto"><span>Stock: </span>{producto.stock}</p>
                     <p className="precioProducto" value={producto.precio_producto}>{formatearPrecio(producto.precio_producto)}</p>
                   </div>
                 </a>
@@ -160,25 +171,29 @@ Main.propTypes = {
   cartProducts: PropTypes.array.isRequired,
   divisaType: PropTypes.string.isRequired,
   setDivisa: PropTypes.func.isRequired,
-  setCart: PropTypes.func.isRequired
+  setCart: PropTypes.func.isRequired,
+  availableProducts: PropTypes.array.isRequired,
+  setAvailableProducts: PropTypes.func.isRequired,
 };
 
 Header.propTypes = {
   cartProducts: PropTypes.array.isRequired,
   divisaType: PropTypes.string.isRequired,
   updateCart: PropTypes.func.isRequired,
+  setAvailableProducts: PropTypes.func.isRequired,
 };
 
 export default function Inicio (){
   const [cartProducts, setCart] = useState([]);
   const [divisaType, setDivisa] = useState('CLP');
+  const [availableProducts, setAvailableProducts] = useState([]);
   const updateCart = (newCart) => {
     setCart(newCart);
   }
   return(
       <>
-        <Header cartProducts={cartProducts} updateCart={updateCart} divisaType={divisaType}/>
-        <Main cartProducts={cartProducts} setCart={setCart} setDivisa={setDivisa} divisaType={divisaType}/>
+        <Header cartProducts={cartProducts} updateCart={updateCart} divisaType={divisaType} setAvailableProducts={setAvailableProducts}/>
+        <Main cartProducts={cartProducts} setCart={setCart} setDivisa={setDivisa} divisaType={divisaType} availableProducts={availableProducts} setAvailableProducts ={setAvailableProducts}/>
       </>
   )
 }
