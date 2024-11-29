@@ -55,30 +55,48 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
 
   useEffect(() => {
     const getProducts = async() => {
-      const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/products');
-      setAvailableProducts( resp.data );
-    }
+      const apiUrl = `${import.meta.env.VITE_API_URL}/products`;
+      try {
+        const resp = await userApi.get(apiUrl);
+        setAvailableProducts( resp.data );
+      } catch (error) {
+        console.error("Error fetching products", error);
+      }
+    };
   
     getProducts();
   }, [setAvailableProducts]);
   
-  const divisa = async(e) => {
+  const divisa = async (e) => {
     let selectedDivisa = e.target.value;
-    let data = {'divisa': selectedDivisa}
-    const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/products2', data);    
-    const updatedProducts = resp.data.map((product, index) => {
-      return {
-        ...availableProducts[index], 
-        precio_producto: product.precio_producto
-      };
-    })
-    setAvailableProducts(updatedProducts);
-    setDivisa(selectedDivisa);
-    setCart(cartProducts.map((item) => {
-      const updatedProduct = updatedProducts.find((product) => product.id_producto === item.producto.id_producto);
-      return {...item, producto: {...item.producto, precio_producto: updatedProduct.precio_producto }};
-    }));
-  }
+    let data = { 'divisa': selectedDivisa };
+    
+    const apiUrl = import.meta.env.VITE_API_PRODUCTS_URL;
+  
+    try {
+      const resp = await userApi.post(apiUrl, data);
+      
+      const updatedProducts = resp.data.map((product, index) => {
+        return {
+          ...availableProducts[index],
+          precio_producto: product.precio_producto
+        };
+      });
+      
+      setAvailableProducts(updatedProducts);
+      setDivisa(selectedDivisa);
+      setCart(cartProducts.map((item) => {
+        const updatedProduct = updatedProducts.find((product) => product.id_producto === item.producto.id_producto);
+        return { 
+          ...item, 
+          producto: { ...item.producto, precio_producto: updatedProduct.precio_producto } 
+        };
+      }));
+    } catch (error) {
+      console.error("Error al cambiar divisa:", error);
+    }
+  };
+  
 
  
   const formatearPrecio = (precio) => {
@@ -196,3 +214,4 @@ export default function Inicio (){
       </>
   )
 }
+
