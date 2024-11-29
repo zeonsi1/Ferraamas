@@ -3,7 +3,7 @@ import icono from '/icono.webp'
 import { Link } from 'react-router-dom'
 import { userApi } from '../api/userApi';
 import { useEffect, useState } from 'react';
-import ImageComponent from './ImageComponent';
+// import ImageComponent from './ImageComponent';
 import cart from '/shopping-cart_2838895.webp';
 import Modal from '../Modals/carritoModal';
 import PropTypes from 'prop-types';
@@ -55,7 +55,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
 
   useEffect(() => {
     const getProducts = async() => {
-      const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/products');
+      const resp = await userApi.get('http://localhost:4000/products');
       setAvailableProducts( resp.data );
     }
   
@@ -65,7 +65,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
   const divisa = async(e) => {
     let selectedDivisa = e.target.value;
     let data = {'divisa': selectedDivisa}
-    const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/products2', data);    
+    const resp = await userApi.post('http://localhost:4000/products2', data);    
     const updatedProducts = resp.data.map((product, index) => {
       return {
         ...availableProducts[index], 
@@ -79,7 +79,6 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
       return {...item, producto: {...item.producto, precio_producto: updatedProduct.precio_producto }};
     }));
   }
-
  
   const formatearPrecio = (precio) => {
     let simbolo = 'clp$';
@@ -108,6 +107,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
       }
       return p;
     });
+
     setAvailableProducts(updatedProducts); // Actualizar el estado con los productos actualizados
   
     setCart((prevCart) => {
@@ -147,7 +147,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
             <div key={index}>
               <div className="producto">
                 <a onClick={(event) => cartShop(producto, event)} href="" >
-                  <ImageComponent producto={producto}/>
+                  {/* <ImageComponent producto={producto}/> */}
                   <div className="info">
                     <p className="nombreProducto" value={producto.nombre_producto}>{producto.nombre_producto}</p>
                     <p className="precioProducto"><span>Stock: </span>{producto.stock}</p>
