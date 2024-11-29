@@ -3,7 +3,7 @@ import icono from '/icono.webp'
 import { Link } from 'react-router-dom'
 import { userApi } from '../api/userApi';
 import { useEffect, useState } from 'react';
-import ImageComponent from './ImageComponent';
+// import ImageComponent from './ImageComponent';
 import cart from '/shopping-cart_2838895.webp';
 import Modal from '../Modals/carritoModal';
 import PropTypes from 'prop-types';
@@ -126,6 +126,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
       }
       return p;
     });
+
     setAvailableProducts(updatedProducts); // Actualizar el estado con los productos actualizados
   
     setCart((prevCart) => {
@@ -165,7 +166,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
             <div key={index}>
               <div className="producto">
                 <a onClick={(event) => cartShop(producto, event)} href="" >
-                  <ImageComponent producto={producto}/>
+                  {/* <ImageComponent producto={producto}/> */}
                   <div className="info">
                     <p className="nombreProducto" value={producto.nombre_producto}>{producto.nombre_producto}</p>
                     <p className="precioProducto"><span>Stock: </span>{producto.stock}</p>

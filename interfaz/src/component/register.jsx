@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from '/logo tomi.webp'
 import { useCallback, useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
-
+import * as argon2 from 'argon2-wasm';
 export default function Register() {
 
     const [values, setValues] = useState({
@@ -70,6 +70,8 @@ export default function Register() {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
+        values.password = await argon2.hash(values.password);
+        console.log(values.password);
         let message = '';
         try{
             const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/create-user', values)
