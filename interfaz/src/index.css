@@ -68,20 +68,20 @@ span {
   margin: 0 auto;
 }
 
-@media (max-width: 768px) {
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    width: 20rem;
-  }
-}
-
 @media (max-width: 1500px){
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     width: 50rem;
     gap: 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    width: 20rem;
   }
 }
 

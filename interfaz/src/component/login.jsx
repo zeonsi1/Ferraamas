@@ -42,15 +42,17 @@ function Login() {
         e.preventDefault();
         let pnombre = '';
         let message = '';
+        const apiUrl = `${import.meta.env.VITE_API_URL}users`;
         try{
             
-            const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/users', values, {
+            const resp = await userApi.post(apiUrl, values, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            user = resp.data[0].id_tipo_user;
-            pnombre = resp.data[0].pnombre_user;
+
+            user = resp.data.userData.id_tipo_user;
+            pnombre = resp.data.userData.pnombre_user;
             switch (user) {
                 case 1:
                     navigate('/admin', {state: {pnombre}});

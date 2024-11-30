@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import logo from '/logo tomi.webp'
 import { useCallback, useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
-import * as argon2 from 'argon2-wasm';
 export default function Register() {
 
     const [values, setValues] = useState({
@@ -10,6 +9,7 @@ export default function Register() {
         pnombre: '',
         password: '',
         confirmPassword: '',
+        hash_password: '',
     });
 
     const [didEdit, setDidEdit] = useState({
@@ -60,7 +60,7 @@ export default function Register() {
         const isEmailValid = values.email.trim() !== '' && values.email.includes('@');
         const isPnombreValid = values.pnombre.trim().length >= 1;
         const isPasswordValid = values.password.trim().length >= 5;
-        const isConfirmPasswordValid = values.confirmPassword.trim() == values.password.trim();
+        const isConfirmPasswordValid = values.confirmPassword.trim() === values.password.trim();
         return isEmailValid && isPnombreValid && isPasswordValid && isConfirmPasswordValid;
     }, [values]);
 
@@ -70,11 +70,10 @@ export default function Register() {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        values.password = await argon2.hash(values.password);
-        console.log(values.password);
         let message = '';
+        const apiUrl = `${import.meta.env.VITE_API_URL}create-user`;
         try{
-            const resp = await userApi.post('https://api-ferramas-2zzy.onrender.com/create-user', values)
+            const resp = await userApi.post(apiUrl, values)
             message = resp.data.message;
             setMessage(message);
             setShow(true);

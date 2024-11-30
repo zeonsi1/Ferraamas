@@ -6,7 +6,7 @@ export default function Admin() {
     const [availableUsers, setAvailableUsers] = useState([]);
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
-
+    const apiUrl = `${import.meta.env.VITE_API_URL}`;
     const location = useLocation();
     const pnombre = location.state.pnombre;
     
@@ -15,7 +15,8 @@ export default function Admin() {
     }, []);
 
     const getUsers = async() => {
-        const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/users-mostrar');
+        const resp = await userApi.get(`${apiUrl}users-mostrar`);
+        console.log(resp.data);
         setAvailableUsers(resp.data);
     }
 
@@ -24,7 +25,7 @@ export default function Admin() {
     }, []);
 
     const getProducts = async () => {
-        const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/products');
+        const resp = await userApi.get(`${apiUrl}products`);
         setProducts( resp.data );
     }
 
@@ -58,7 +59,7 @@ export default function Admin() {
     const updateStock = async (index) => {
         const producto = products[index];
         try {
-            const resp = await userApi.put('https://api-ferramas-2zzy.onrender.com/update-stock', producto);
+            const resp = await userApi.put(`${apiUrl}update-stock`, producto);
             setMessage(prevMessages => {
                 const newMessages = [...prevMessages];
                 newMessages[index] = { message: resp.data.message, showMessage: true };
@@ -106,18 +107,16 @@ export default function Admin() {
                         <th>ID</th>
                         <th>Nombre Usuario</th>
                         <th>Email Usuario</th>
-                        <th>Password Usuario</th>
                         <th>Tipo de Usuario</th>
                         </tr>
                     </thead>
                     <tbody>
                         {availableUsers.map((user, index) => (
                         <tr key={index}>
-                            <td>{user.id}</td>
+                            <td>{user.id_user}</td>
                             <td>{user.pnombre_user}</td>
                             <td>{user.email}</td>
-                            <td>{user.password}</td>
-                            <td>{user.nombre_tipo_user}</td>
+                            <td>{user.tipo_user}</td>
                         </tr>
                         ))}
                     </tbody>

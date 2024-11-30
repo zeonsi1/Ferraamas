@@ -10,9 +10,10 @@ export default function Result() {
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const token_ws = searchParams.get('token_ws');
+        const apiUrl = `${import.meta.env.VITE_API_URL}`;
 
         if (token_ws) {
-            axios.get(`https://api-ferramas-2zzy.onrender.com/webpay-return?token_ws=${token_ws}`)
+            axios.get(`${apiUrl}webpay-return?token_ws=${token_ws}`)
                 .then(response => {
                     // Verificar si la respuesta es HTML
                     if (response.headers['content-type'].includes('text/html')) {

@@ -8,12 +8,6 @@ importers:
 
   .:
     dependencies:
-      argon2-browser:
-        specifier: ^1.18.0
-        version: 1.18.0
-      argon2-wasm:
-        specifier: ^0.9.0
-        version: 0.9.0
       axios:
         specifier: ^1.6.8
         version: 1.7.8
@@ -38,12 +32,6 @@ importers:
       react-router-dom:
         specifier: ^6.22.3
         version: 6.28.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      vite-plugin-top-level-await:
-        specifier: ^1.4.4
-        version: 1.4.4(rollup@4.27.4)(vite@5.4.11(@types/node@22.10.1))
-      vite-plugin-wasm:
-        specifier: ^3.3.0
-        version: 3.3.0(vite@5.4.11(@types/node@22.10.1))
     devDependencies:
       '@types/react':
         specifier: ^18.2.66
@@ -358,15 +346,6 @@ packages:
     resolution: {integrity: sha512-xfSkCAchbdG5PnbrKqFWwia4Bi61nH+wm8wLEqfHDyp7Y3dZzgqS2itV8i4gAq9pC2HsTpwyBC6Ds8VHZ96JlA==}
     engines: {node: '>=14.0.0'}
 
-  '@rollup/plugin-virtual@3.0.2':
-    resolution: {integrity: sha512-10monEYsBp3scM4/ND4LNH5Rxvh3e/cVeL3jWTgZ2SrQ+BmUoQcopVQvnaMcOnykb1VkxUFuDAN+0FnpTFRy2A==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-
   '@rollup/rollup-android-arm-eabi@4.27.4':
     resolution: {integrity: sha512-2Y3JT6f5MrQkICUyRVCw4oa0sutfAsgaSsb0Lmmy1Wi2y7X5vT9Euqw4gOsCyy0YfKURBg35nhUKZS4mDcfULw==}
     cpu: [arm]
@@ -457,81 +436,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@swc/core-darwin-arm64@1.9.3':
-    resolution: {integrity: sha512-hGfl/KTic/QY4tB9DkTbNuxy5cV4IeejpPD4zo+Lzt4iLlDWIeANL4Fkg67FiVceNJboqg48CUX+APhDHO5G1w==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@swc/core-darwin-x64@1.9.3':
-    resolution: {integrity: sha512-IaRq05ZLdtgF5h9CzlcgaNHyg4VXuiStnOFpfNEMuI5fm5afP2S0FHq8WdakUz5WppsbddTdplL+vpeApt/WCQ==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@swc/core-linux-arm-gnueabihf@1.9.3':
-    resolution: {integrity: sha512-Pbwe7xYprj/nEnZrNBvZfjnTxlBIcfApAGdz2EROhjpPj+FBqBa3wOogqbsuGGBdCphf8S+KPprL1z+oDWkmSQ==}
-    engines: {node: '>=10'}
-    cpu: [arm]
-    os: [linux]
-
-  '@swc/core-linux-arm64-gnu@1.9.3':
-    resolution: {integrity: sha512-AQ5JZiwNGVV/2K2TVulg0mw/3LYfqpjZO6jDPtR2evNbk9Yt57YsVzS+3vHSlUBQDRV9/jqMuZYVU3P13xrk+g==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@swc/core-linux-arm64-musl@1.9.3':
-    resolution: {integrity: sha512-tzVH480RY6RbMl/QRgh5HK3zn1ZTFsThuxDGo6Iuk1MdwIbdFYUY034heWUTI4u3Db97ArKh0hNL0xhO3+PZdg==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@swc/core-linux-x64-gnu@1.9.3':
-    resolution: {integrity: sha512-ivXXBRDXDc9k4cdv10R21ccBmGebVOwKXT/UdH1PhxUn9m/h8erAWjz5pcELwjiMf27WokqPgaWVfaclDbgE+w==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@swc/core-linux-x64-musl@1.9.3':
-    resolution: {integrity: sha512-ILsGMgfnOz1HwdDz+ZgEuomIwkP1PHT6maigZxaCIuC6OPEhKE8uYna22uU63XvYcLQvZYDzpR3ms47WQPuNEg==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@swc/core-win32-arm64-msvc@1.9.3':
-    resolution: {integrity: sha512-e+XmltDVIHieUnNJHtspn6B+PCcFOMYXNJB1GqoCcyinkEIQNwC8KtWgMqUucUbEWJkPc35NHy9k8aCXRmw9Kg==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@swc/core-win32-ia32-msvc@1.9.3':
-    resolution: {integrity: sha512-rqpzNfpAooSL4UfQnHhkW8aL+oyjqJniDP0qwZfGnjDoJSbtPysHg2LpcOBEdSnEH+uIZq6J96qf0ZFD8AGfXA==}
-    engines: {node: '>=10'}
-    cpu: [ia32]
-    os: [win32]
-
-  '@swc/core-win32-x64-msvc@1.9.3':
-    resolution: {integrity: sha512-3YJJLQ5suIEHEKc1GHtqVq475guiyqisKSoUnoaRtxkDaW5g1yvPt9IoSLOe2mRs7+FFhGGU693RsBUSwOXSdQ==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [win32]
-
-  '@swc/core@1.9.3':
-    resolution: {integrity: sha512-oRj0AFePUhtatX+BscVhnzaAmWjpfAeySpM1TCbxA1rtBDeH/JDhi5yYzAKneDYtVtBvA7ApfeuzhMC9ye4xSg==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      '@swc/helpers': '*'
-    peerDependenciesMeta:
-      '@swc/helpers':
-        optional: true
-
-  '@swc/counter@0.1.3':
-    resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
-
-  '@swc/types@0.1.17':
-    resolution: {integrity: sha512-V5gRru+aD8YVyCOMAjMpWR1Ui577DD5KSJsHP8RAxopAH22jFz6GZd/qxqjO6MJHQhcsjvjOFXyDhyLQUnMveQ==}
-
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -591,12 +495,6 @@ packages:
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
     engines: {node: '>=8'}
-
-  argon2-browser@1.18.0:
-    resolution: {integrity: sha512-ImVAGIItnFnvET1exhsQB7apRztcoC5TnlSqernMJDUjbc/DLq3UEYeXFrLPrlaIl8cVfwnXb6wX2KpFf2zxHw==}
-
-  argon2-wasm@0.9.0:
-    resolution: {integrity: sha512-bt5xqrDt5FnA1gdLLouOwi2NN1h9BeML8DmKth7CCYhygoXUEDeIxEMB++q+CUPQ8U5gju065Z0MjI+hVSXX7A==}
 
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
@@ -1485,20 +1383,6 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  uuid@10.0.0:
-    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
-    hasBin: true
-
-  vite-plugin-top-level-await@1.4.4:
-    resolution: {integrity: sha512-QyxQbvcMkgt+kDb12m2P8Ed35Sp6nXP+l8ptGrnHV9zgYDUpraO0CPdlqLSeBqvY2DToR52nutDG7mIHuysdiw==}
-    peerDependencies:
-      vite: '>=2.8'
-
-  vite-plugin-wasm@3.3.0:
-    resolution: {integrity: sha512-tVhz6w+W9MVsOCHzxo6SSMSswCeIw4HTrXEi6qL3IRzATl83jl09JVO1djBqPSwfjgnpVHNLYcaMbaDX5WB/pg==}
-    peerDependencies:
-      vite: ^2 || ^3 || ^4 || ^5
-
   vite@5.4.11:
     resolution: {integrity: sha512-c7jFQRklXua0mTzneGW9QVyxFjUgwcihC4bXEtujIo2ouWCe1Ajt/amn2PCxYnhYfd5k09JX3SB7OYWFKYqj8Q==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -1816,10 +1700,6 @@ snapshots:
 
   '@remix-run/router@1.21.0': {}
 
-  '@rollup/plugin-virtual@3.0.2(rollup@4.27.4)':
-    optionalDependencies:
-      rollup: 4.27.4
-
   '@rollup/rollup-android-arm-eabi@4.27.4':
     optional: true
 
@@ -1873,58 +1753,6 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.27.4':
     optional: true
-
-  '@swc/core-darwin-arm64@1.9.3':
-    optional: true
-
-  '@swc/core-darwin-x64@1.9.3':
-    optional: true
-
-  '@swc/core-linux-arm-gnueabihf@1.9.3':
-    optional: true
-
-  '@swc/core-linux-arm64-gnu@1.9.3':
-    optional: true
-
-  '@swc/core-linux-arm64-musl@1.9.3':
-    optional: true
-
-  '@swc/core-linux-x64-gnu@1.9.3':
-    optional: true
-
-  '@swc/core-linux-x64-musl@1.9.3':
-    optional: true
-
-  '@swc/core-win32-arm64-msvc@1.9.3':
-    optional: true
-
-  '@swc/core-win32-ia32-msvc@1.9.3':
-    optional: true
-
-  '@swc/core-win32-x64-msvc@1.9.3':
-    optional: true
-
-  '@swc/core@1.9.3':
-    dependencies:
-      '@swc/counter': 0.1.3
-      '@swc/types': 0.1.17
-    optionalDependencies:
-      '@swc/core-darwin-arm64': 1.9.3
-      '@swc/core-darwin-x64': 1.9.3
-      '@swc/core-linux-arm-gnueabihf': 1.9.3
-      '@swc/core-linux-arm64-gnu': 1.9.3
-      '@swc/core-linux-arm64-musl': 1.9.3
-      '@swc/core-linux-x64-gnu': 1.9.3
-      '@swc/core-linux-x64-musl': 1.9.3
-      '@swc/core-win32-arm64-msvc': 1.9.3
-      '@swc/core-win32-ia32-msvc': 1.9.3
-      '@swc/core-win32-x64-msvc': 1.9.3
-
-  '@swc/counter@0.1.3': {}
-
-  '@swc/types@0.1.17':
-    dependencies:
-      '@swc/counter': 0.1.3
 
   '@types/babel__core@7.20.5':
     dependencies:
@@ -1999,10 +1827,6 @@ snapshots:
   ansi-styles@4.3.0:
     dependencies:
       color-convert: 2.0.1
-
-  argon2-browser@1.18.0: {}
-
-  argon2-wasm@0.9.0: {}
 
   argparse@2.0.1: {}
 
@@ -3100,22 +2924,6 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
-
-  uuid@10.0.0: {}
-
-  vite-plugin-top-level-await@1.4.4(rollup@4.27.4)(vite@5.4.11(@types/node@22.10.1)):
-    dependencies:
-      '@rollup/plugin-virtual': 3.0.2(rollup@4.27.4)
-      '@swc/core': 1.9.3
-      uuid: 10.0.0
-      vite: 5.4.11(@types/node@22.10.1)
-    transitivePeerDependencies:
-      - '@swc/helpers'
-      - rollup
-
-  vite-plugin-wasm@3.3.0(vite@5.4.11(@types/node@22.10.1)):
-    dependencies:
-      vite: 5.4.11(@types/node@22.10.1)
 
   vite@5.4.11(@types/node@22.10.1):
     dependencies:
