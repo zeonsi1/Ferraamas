@@ -81,7 +81,7 @@ span {
   .grid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    width: 20rem;
+    width: 15rem;
   }
 }
 

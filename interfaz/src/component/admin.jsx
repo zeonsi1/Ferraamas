@@ -16,7 +16,6 @@ export default function Admin() {
 
     const getUsers = async() => {
         const resp = await userApi.get(`${apiUrl}users-mostrar`);
-        console.log(resp.data);
         setAvailableUsers(resp.data);
     }
 

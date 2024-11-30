@@ -3,6 +3,8 @@ import logo from '/logo tomi.webp'
 import { Link } from 'react-router-dom';
 import { userApi } from '../api/userApi';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 function Login() {
     const navigate = useNavigate();
     const [values, setValues] = useState({
@@ -51,20 +53,27 @@ function Login() {
                 }
             });
 
-            user = resp.data.userData.id_tipo_user;
-            pnombre = resp.data.userData.pnombre_user;
+            const token = resp.data.token;
+            console.log(token);
+
+            const decodedToken = jwtDecode(token);
+
+            console.log(decodedToken);
+
+            user = decodedToken.id_tipo_user;
+            pnombre = decodedToken.pnombre_user;
             switch (user) {
                 case 1:
-                    navigate('/admin', {state: {pnombre}});
+                    navigate('/admin', {state: {pnombre, token}});
                     break;
                 case 2:
-                    navigate('/bodeguero', {state: {pnombre}});
+                    navigate('/bodeguero', {state: {pnombre, token}});
                     break;
                 case 3:
-                    navigate('/', {state: {pnombre}});
+                    navigate('/', {state: {pnombre, token}});
                     break;
                 case 4:
-                    navigate('/contador', {state: {pnombre}});
+                    navigate('/contador', {state: {pnombre, token}});
                     break;
             }
 
