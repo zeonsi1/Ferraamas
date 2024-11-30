@@ -490,3 +490,9 @@ hr {
   font-weight: 100;
   font-size: 30px;
 }
+
+
+.loader {
+  margin: 0 auto;
+  font-size: 1.5rem;
+}

@@ -9,13 +9,14 @@ export default function Admin() {
     const apiUrl = `${import.meta.env.VITE_API_URL}`;
     const location = useLocation();
     const pnombre = location.state.pnombre;
+    const token = localStorage.getItem('token');
     
     useEffect(() => {
         getUsers();
     }, []);
 
     const getUsers = async() => {
-        const resp = await userApi.get(`${apiUrl}users-mostrar`);
+        const resp = await userApi.post(`${apiUrl}users-mostrar`, {token});
         setAvailableUsers(resp.data);
     }
 

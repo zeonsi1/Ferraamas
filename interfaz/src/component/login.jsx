@@ -59,26 +59,25 @@ function Login() {
             });
 
             const token = resp.data.token;
-            console.log(token);
+            
+            localStorage.setItem('token', token);
 
             const decodedToken = jwtDecode(token);
-
-            console.log(decodedToken);
 
             user = decodedToken.id_tipo_user;
             pnombre = decodedToken.pnombre_user;
             switch (user) {
                 case 1:
-                    navigate('/admin', {state: {pnombre, token}});
+                    navigate('/admin', {state: {pnombre}});
                     break;
                 case 2:
-                    navigate('/bodeguero', {state: {pnombre, token}});
+                    navigate('/bodeguero', {state: {pnombre}});
                     break;
                 case 3:
-                    navigate('/', {state: {pnombre, token}});
+                    navigate('/', {state: {pnombre}});
                     break;
                 case 4:
-                    navigate('/contador', {state: {pnombre, token}});
+                    navigate('/contador', {state: {pnombre}});
                     break;
             }
 
