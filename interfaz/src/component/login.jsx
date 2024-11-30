@@ -27,6 +27,9 @@ function Login() {
 
     const passwordIsInvalid = didEdit.password && values.password.trim().length < 6;
 
+    const [failedAttempts, setFailedAttempts] = useState(0);
+    const [isBlocked, setIsBlocked] = useState(false);
+    
    
     function validateForm() {
         const isEmailValid = values.email.trim() !== '' && values.email.includes('@');
@@ -45,6 +48,8 @@ function Login() {
         let pnombre = '';
         let message = '';
         const apiUrl = `${import.meta.env.VITE_API_URL}users`;
+
+
         try{
             
             const resp = await userApi.post(apiUrl, values, {
@@ -81,13 +86,25 @@ function Login() {
             if (error.request.status == 401) {
                 message = 'Email o Contraseña Invalida';
                 console.log(message)
+                setFailedAttempts(failedAttempts + 1);
+                
+                if (failedAttempts + 1 >= 3) {
+                    message = 'Demasiados intentos fallidos, \nintente nuevamente en 1 minuto';
+                    setIsBlocked(true);
+                    setTimeout(() => {
+                        setIsBlocked(false);
+                        setFailedAttempts(0);
+                    }, 60000);
+                }
+
+                setErrorMessage(message);
+                setShowMessage(true);
+                
             } else if (error.request.status == 500){
                 message = 'Error en el servidor'
             } else {
                 console.error('Unexpected error:', error);
             }
-            setErrorMessage(message);
-            setShowMessage(true);
         }
     }
 
@@ -168,7 +185,7 @@ function Login() {
                     </div>
                     <br />
                     <div className="btn-submit">
-                        <button disabled={!formValid} type='submit'>Iniciar Sesión</button>
+                        <button disabled={!formValid || isBlocked} type='submit'>Iniciar Sesión</button>
                     </div>
                 </form>
             </div>
