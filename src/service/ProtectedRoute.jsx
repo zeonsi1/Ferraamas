@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
 
     useEffect(() => {
         const verifyToken = async () => {
-            const apiUrl = `${import.meta.env.VITE_API_URL}verify-token`;
+            const apiUrl = `https://rpj6jd67-4000.brs.devtunnels.ms/verify-token`;
 
             try {
                 await userApi.post(apiUrl, { token });

@@ -10,7 +10,7 @@ export default function Result() {
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const token_ws = searchParams.get('token_ws');
-        const apiUrl = `${import.meta.env.VITE_API_URL}`;
+        const apiUrl = 'https://rpj6jd67-4000.brs.devtunnels.ms/';
 
         if (token_ws) {
             axios.get(`${apiUrl}webpay-return?token_ws=${token_ws}`)

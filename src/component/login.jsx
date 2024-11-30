@@ -47,7 +47,7 @@ function Login() {
         e.preventDefault();
         let pnombre = '';
         let message = '';
-        const apiUrl = `${import.meta.env.VITE_API_URL}users`;
+        const apiUrl = 'https://rpj6jd67-4000.brs.devtunnels.ms/users';
 
 
         try{

@@ -55,7 +55,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
 
   useEffect(() => {
     const getProducts = async() => {
-      const apiUrl = `${import.meta.env.VITE_API_URL}products`;
+      const apiUrl = 'https://rpj6jd67-4000.brs.devtunnels.ms/products';
       try {
         const resp = await userApi.get(apiUrl);
         setAvailableProducts( resp.data );
@@ -71,7 +71,7 @@ function Main({cartProducts, setCart, setDivisa, divisaType, availableProducts, 
     let selectedDivisa = e.target.value;
     let data = { 'divisa': selectedDivisa };
     
-    const apiUrl = `${import.meta.env.VITE_API_URL}products2`;
+    const apiUrl = 'https://rpj6jd67-4000.brs.devtunnels.ms/products2';
   
     try {
       const resp = await userApi.post(apiUrl, data);
