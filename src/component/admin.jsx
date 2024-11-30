@@ -6,7 +6,7 @@ export default function Admin() {
     const [availableUsers, setAvailableUsers] = useState([]);
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('');
-    const apiUrl = 'https://rpj6jd67-4000.brs.devtunnels.ms/';
+    const apiUrl = 'https://api-ferramas-pb6j.onrender.com/';
     const location = useLocation();
     const pnombre = location.state.pnombre;
     const token = localStorage.getItem('token');

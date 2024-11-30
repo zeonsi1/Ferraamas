@@ -71,7 +71,7 @@ export default function Register() {
     const handleSubmit = async(e) => {
         e.preventDefault()
         let message = '';
-        const apiUrl = 'https://rpj6jd67-4000.brs.devtunnels.ms/create-user';
+        const apiUrl = 'https://api-ferramas-pb6j.onrender.com/create-user';
         try{
             const resp = await userApi.post(apiUrl, values)
             message = resp.data.message;

@@ -59,7 +59,7 @@ function Modal({ cartProducts, onClose, updateCart, divisaType, setAvailableProd
       divisaType
     };
 
-    const apiUrl = `${import.meta.env.VITE_API_URL}`;
+    const apiUrl = 'https://api-ferramas-pb6j.onrender.com/';
 
     try {
       const resp = await userApi.post(`${apiUrl}webpay`, data);

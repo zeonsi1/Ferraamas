@@ -15,7 +15,7 @@ export default function Contador() {
     }, []);
 
     const getProducts = async () => {
-        const resp = await userApi.get('https://api-ferramas-2zzy.onrender.com/products');
+        const resp = await userApi.get('https://api-ferramas-pb6j.onrender.com/products');
         setProducts( resp.data );
     }
 
@@ -40,7 +40,7 @@ export default function Contador() {
     const updateStock = async (index) => {
         const producto = products[index];
         try {
-            const resp = await userApi.put('https://api-ferramas-2zzy.onrender.com/update-stock', producto);
+            const resp = await userApi.put('https://api-ferramas-pb6j.onrender.com/update-stock', producto);
             setMessage(prevMessages => {
                 const newMessages = [...prevMessages];
                 newMessages[index] = { message: resp.data.message, showMessage: true };

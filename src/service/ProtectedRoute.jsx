@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
 
     useEffect(() => {
         const verifyToken = async () => {
-            const apiUrl = `https://rpj6jd67-4000.brs.devtunnels.ms/verify-token`;
+            const apiUrl = `https://api-ferramas-pb6j.onrender.com/verify-token`;
 
             try {
                 await userApi.post(apiUrl, { token });
