@@ -15,7 +15,7 @@ const router= createBrowserRouter([
   {path: '/bodeguero', element: <ProtectedRoute><Bodeguero/></ProtectedRoute>},
   {path: '/register', element: <ProtectedRoute><Register/></ProtectedRoute>},
   {path: '/contador', element: <ProtectedRoute><Contador/></ProtectedRoute>},
-  {path: '/result', element: <ProtectedRoute><Result/></ProtectedRoute>},
+  {path: '/result', element: <Result/>},
   {path: '*', element: <h1>404</h1>}
 ]);
 
